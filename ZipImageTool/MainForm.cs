@@ -1,5 +1,4 @@
 using Ionic.Zlib;
-using MaterialSkin;
 using PickPack.Disk;
 using SharpCompress.Common;
 using System.ComponentModel;
@@ -7,11 +6,10 @@ using System.Diagnostics;
 
 namespace ZipImageTool
 {
-    public partial class MainForm : MaterialSkin.Controls.MaterialForm
+    public partial class MainForm : Form
     {
         #region Field
 
-        readonly MaterialSkinManager materialSkinManager;
         WmiWatchers wmiWatchers = new WmiWatchers();
         CancellationTokenSource? cancellationTokenSource;
         bool isWorking = false;
@@ -24,24 +22,8 @@ namespace ZipImageTool
 
             this.Text = $"{Application.ProductName} v 0.9b";
 
-            #region Init MaterialSkinManager
-
-            this.materialSkinManager = MaterialSkin.MaterialSkinManager.Instance;
-            this.materialSkinManager.AddFormToManage(this);
-
-            void ApplyFontToAllControls(Control parent, System.Drawing.Font font)
-            {
-                foreach (Control c in parent.Controls)
-                {
-                    c.Font = font;
-                    if (c.HasChildren)
-                        ApplyFontToAllControls(c, font);
-                }
-            }
-
-            ApplyFontToAllControls(this, this.Font);
-
-            #endregion
+            this.materialComboBox_MaxOutputSegmentSize64.SelectedIndex = 5;
+            this.materialComboBox_CompressionLevel.SelectedIndex = 0;            
 
             ListRemovableUsbDrives();
 
@@ -57,7 +39,6 @@ namespace ZipImageTool
                 this.Invoke((Action)(() => ListRemovableUsbDrives()));
             };
         }
-
 
         #region Private        
 
@@ -228,11 +209,11 @@ namespace ZipImageTool
             this.cancellationTokenSource = new CancellationTokenSource();
             this.button_Write.Text = "취소";
 
+            DriveInfos info = this.materialComboBox_USB.SelectedItem as DriveInfos;
+            int diskNumber = info.DiskNumber;
+
             try
             {
-                DriveInfos info = this.materialComboBox_USB.SelectedItem as DriveInfos;
-                int diskNumber = info.DiskNumber;
-
                 ImageWriter imgWriter = new ImageWriter();
                 imgWriter.ProgressChanged += ImgWriter_ProgressChanged;
                 imgWriter.WriteEnded += ImgWriter_WriteEnded;
@@ -244,7 +225,7 @@ namespace ZipImageTool
                 this.toolStripProgressBar1.Value = 0;
                 this.toolStripStatusLabel1.Text = "굽기 취소";
 
-                await PartitionUtil.RescanDisksAsync();
+                PartitionUtil.RescanDisk(diskNumber);
 
                 MessageBox.Show("굽기가 취소 되었습니다.", "알림", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -281,7 +262,7 @@ namespace ZipImageTool
             }
         }
 
-        private async void ImgWriter_WriteEnded(object? sender, EventArgs e)
+        private void ImgWriter_WriteEnded(object? sender, EventArgs e)
         {
             if (this.InvokeRequired)
                 this.Invoke(new Action(() => ImgWriter_WriteEnded(sender, e)));
@@ -290,9 +271,12 @@ namespace ZipImageTool
                 this.toolStripProgressBar1.Value = 100;
                 this.toolStripStatusLabel1.Text = "이미지 굽기 완료";
 
-                await PartitionUtil.RescanDisksAsync();
+                DriveInfos info = this.materialComboBox_USB.SelectedItem as DriveInfos;
+                int diskNumber = info.DiskNumber;
 
-                // RescanDisks로 Drive Letter 지정이 안되는 경우가 있어 추가
+                PartitionUtil.RescanDisk(diskNumber);
+
+                // RescanDisk로 Drive Letter 지정이 안되는 경우가 있어 추가
                 PartitionUtil.AssignNextAvailableDriveLetter();
 
                 Application.DoEvents();

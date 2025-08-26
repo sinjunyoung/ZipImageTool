@@ -22,7 +22,7 @@ namespace ZipImageTool
         {
             InitializeComponent();
 
-            this.Text = $"{Application.ProductName} v {Application.ProductVersion}b";            
+            this.Text = $"{Application.ProductName} v 0.9b";
 
             #region Init MaterialSkinManager
 

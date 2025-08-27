@@ -278,7 +278,7 @@
             materialComboBox_CompressionLevel.FormattingEnabled = true;
             materialComboBox_CompressionLevel.IntegralHeight = false;
             materialComboBox_CompressionLevel.ItemHeight = 20;
-            materialComboBox_CompressionLevel.Items.AddRange(new object[] { "압축 안함", "보통 압축률", "최고 압축률" });
+            materialComboBox_CompressionLevel.Items.AddRange(new object[] { "압축 안함", "빠르게", "보통 압축률" });
             materialComboBox_CompressionLevel.Location = new Point(76, 160);
             materialComboBox_CompressionLevel.MaxDropDownItems = 4;
             materialComboBox_CompressionLevel.Name = "materialComboBox_CompressionLevel";

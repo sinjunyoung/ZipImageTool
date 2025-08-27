@@ -5,6 +5,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
+using System.Windows.Forms;
 
 namespace ZipImageTool
 {
@@ -22,6 +23,9 @@ namespace ZipImageTool
         {
             InitializeComponent();
 
+            // 절전모드 방지
+            DiskUtil.PreventSleep();
+
             string version = Application.ProductVersion;
             var cleanVersion = version.Split('+')[0];
 
@@ -29,7 +33,7 @@ namespace ZipImageTool
             var debugAttribute = assembly.GetCustomAttribute<System.Diagnostics.DebuggableAttribute>();
             bool isDebug = debugAttribute != null && debugAttribute.IsJITTrackingEnabled;
 
-            this.Text = $"{Application.ProductName} Ver {cleanVersion} {(isDebug ? "- Debug" : "- Release")}";
+            this.Text = $"{Application.ProductName} Ver {cleanVersion} {(isDebug ? "- Debug" : "- Release")} - For DC Inside Retro Gallery";
 
             this.materialComboBox_MaxOutputSegmentSize64.SelectedIndex = 5;
             this.materialComboBox_CompressionLevel.SelectedIndex = 0;            
@@ -109,12 +113,12 @@ namespace ZipImageTool
                 // 무압축
                 case 0:
                     return CompressionLevel.None;
-                // 보통
+                // 빠르게
                 case 1:
-                    return CompressionLevel.Level4;
-                // 최고
+                    return CompressionLevel.BestSpeed;
+                // 보통 압축률
                 case 2:
-                    return CompressionLevel.BestCompression;
+                    return CompressionLevel.Level4;
                 default:
                     return CompressionLevel.None;
             }

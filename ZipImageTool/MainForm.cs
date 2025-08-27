@@ -1,8 +1,10 @@
 using Ionic.Zlib;
 using PickPack.Disk;
 using SharpCompress.Common;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace ZipImageTool
 {
@@ -20,7 +22,14 @@ namespace ZipImageTool
         {
             InitializeComponent();
 
-            this.Text = $"{Application.ProductName} v 0.9b";
+            string version = Application.ProductVersion;
+            var cleanVersion = version.Split('+')[0];
+
+            var assembly = Assembly.GetExecutingAssembly();
+            var debugAttribute = assembly.GetCustomAttribute<System.Diagnostics.DebuggableAttribute>();
+            bool isDebug = debugAttribute != null && debugAttribute.IsJITTrackingEnabled;
+
+            this.Text = $"{Application.ProductName} Ver {cleanVersion} {(isDebug ? "- Debug" : "- Release")}";
 
             this.materialComboBox_MaxOutputSegmentSize64.SelectedIndex = 5;
             this.materialComboBox_CompressionLevel.SelectedIndex = 0;            
@@ -130,7 +139,7 @@ namespace ZipImageTool
                     }
                     catch (IOException ex)
                     {
-                        System.Diagnostics.Debug.WriteLine($"Could not delete temp file {file}: {ex.Message}");
+                        Debug.WriteLine($"Could not delete temp file {file}: {ex.Message}");
                     }
                 }
 
@@ -142,17 +151,17 @@ namespace ZipImageTool
                     try
                     {
                         File.Delete(file);
-                        System.Diagnostics.Debug.WriteLine($"Deleted partial zip file: {file}");
+                        Debug.WriteLine($"Deleted partial zip file: {file}");
                     }
                     catch (IOException ex)
                     {
-                        System.Diagnostics.Debug.WriteLine($"Could not delete partial file {file}: {ex.Message}");
+                        Debug.WriteLine($"Could not delete partial file {file}: {ex.Message}");
                     }
                 }
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"An unexpected error occurred: {ex.Message}");
+                Debug.WriteLine($"An unexpected error occurred: {ex.Message}");
             }
         }
 

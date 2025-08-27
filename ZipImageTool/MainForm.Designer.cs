@@ -219,10 +219,12 @@
             richTextBox_ImageWrite.DetectUrls = false;
             richTextBox_ImageWrite.Font = new Font("맑은 고딕", 9F);
             richTextBox_ImageWrite.Location = new Point(76, 7);
+            richTextBox_ImageWrite.Multiline = false;
             richTextBox_ImageWrite.Name = "richTextBox_ImageWrite";
             richTextBox_ImageWrite.Size = new Size(748, 49);
             richTextBox_ImageWrite.TabIndex = 19;
             richTextBox_ImageWrite.Text = "";
+            richTextBox_ImageWrite.WordWrap = false;
             // 
             // pictureBox_Write
             // 
@@ -259,10 +261,12 @@
             richTextBox_ImageRead.DetectUrls = false;
             richTextBox_ImageRead.Font = new Font("맑은 고딕", 9F);
             richTextBox_ImageRead.Location = new Point(76, 7);
+            richTextBox_ImageRead.Multiline = false;
             richTextBox_ImageRead.Name = "richTextBox_ImageRead";
             richTextBox_ImageRead.Size = new Size(748, 49);
             richTextBox_ImageRead.TabIndex = 21;
             richTextBox_ImageRead.Text = "";
+            richTextBox_ImageRead.WordWrap = false;
             // 
             // materialComboBox_CompressionLevel
             // 

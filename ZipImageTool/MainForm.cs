@@ -33,7 +33,7 @@ namespace ZipImageTool
             var debugAttribute = assembly.GetCustomAttribute<System.Diagnostics.DebuggableAttribute>();
             bool isDebug = debugAttribute != null && debugAttribute.IsJITTrackingEnabled;
 
-            this.Text = $"{Application.ProductName} Ver {cleanVersion} {(isDebug ? "- Debug" : "- Release")} - For DC Inside Retro Gallery";
+            this.Text = $"{Application.ProductName} Ver {cleanVersion} {(isDebug ? "- Debug" : "- Release")} - For DC Inside Retro Game Gallery";
 
             this.materialComboBox_MaxOutputSegmentSize64.SelectedIndex = 5;
             this.materialComboBox_CompressionLevel.SelectedIndex = 0;            
@@ -118,7 +118,10 @@ namespace ZipImageTool
                     return CompressionLevel.BestSpeed;
                 // º¸Åë ¾ÐÃà·ü
                 case 2:
-                    return CompressionLevel.Level4;
+                    return CompressionLevel.Default;
+                // ÃÖ´ë ¾ÐÃà·ü
+                case 3:
+                    return CompressionLevel.BestCompression;
                 default:
                     return CompressionLevel.None;
             }

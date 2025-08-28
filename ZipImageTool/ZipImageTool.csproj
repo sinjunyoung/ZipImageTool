@@ -10,7 +10,7 @@
     <StartupObject>ZipImageTool.Program</StartupObject>
     <Company>YameSoft</Company>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Version>1.1</Version>        
+    <Version>1.2</Version>        
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

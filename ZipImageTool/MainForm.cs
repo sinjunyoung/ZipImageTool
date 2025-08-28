@@ -211,11 +211,11 @@ namespace ZipImageTool
 
             string imagePath = this.richTextBox_ImageWrite.Text;
 
-            if (!File.Exists(imagePath))
-            {
-                MessageBox.Show("이미지 파일을 선택해주세요.", "알림", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
+            //if (!File.Exists(imagePath))
+            //{
+            //    MessageBox.Show("이미지 파일을 선택해주세요.", "알림", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //    return;
+            //}
 
             if (MessageBox.Show("굽기를 시작하면 선택한 드라이브의 모든 데이터가 삭제 됩니다.\n진행 할까요?", "알림", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 return;
